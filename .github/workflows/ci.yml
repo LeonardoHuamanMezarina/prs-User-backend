@@ -2,7 +2,7 @@ name: User Microservice CI
 
 on:
   push:
-    branches: ['**']
+    branches: ["Main"]
   pull_request:
   workflow_dispatch:
 
