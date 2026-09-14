@@ -1,0 +1,21 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/prs_test
+    username: test
+    password: test
+    pool:
+      initial-size: 0
+  sql:
+    init:
+      mode: never
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/test
+
+eureka:
+  client:
+    enabled: false
+    registerWithEureka: false
+    fetchRegistry: false

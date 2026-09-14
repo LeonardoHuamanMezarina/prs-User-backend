@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  netty:
+    connection-timeout: 30000
+    idle-timeout: 60000
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: vg-ms-userService
+  r2dbc:
+    url: r2dbc:postgresql://ep-sweet-cherry-ac1jujjy.sa-east-1.aws.neon.tech/login?sslmode=require
+    username: neondb_owner
+    password: npg_JPQSp1e0TCj0
+
+# OAuth2 Resource Server Config
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://lab.vallegrande.edu.pe/keycloak-security/realms/prs-realm
+
+logging:
+  level:
+    io.r2dbc: WARN
+    org.springframework.r2dbc: WARN
+    reactor.netty: WARN
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+# ─── Eureka Client ────────────────────────────────────────────────────────────
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: false
+    instanceId: ${spring.application.name}:${server.port}
