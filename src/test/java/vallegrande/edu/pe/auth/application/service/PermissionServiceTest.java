@@ -31,7 +31,7 @@ class PermissionServiceTest {
     }
 
     @ParameterizedTest(name = "{0} permite rol {1}")
-    @CsvSource({"assign,SECRETARIO", "remove,SECRETARIO", "tenant,SECRETARIO", "platform,SUPERADMIN"})
+    @CsvSource({ "assign,SECRETARIO", "remove,SECRETARIO", "tenant,SECRETARIO", "platform,SUPERADMIN" })
     void allowsExpectedRole(String operation, String role) {
         stubUserRole(role);
         switch (operation) {
@@ -53,8 +53,8 @@ class PermissionServiceTest {
     }
 
     @ParameterizedTest(name = "{0} rechaza rol {1}")
-    @CsvSource({"assign,PARROCO", "assign,SUPERADMIN", "remove,PARROCO", "remove,SUPERADMIN",
-            "tenant,PARROCO", "tenant,SUPERADMIN", "platform,SECRETARIO", "platform,PARROCO"})
+    @CsvSource({ "assign,PARROCO", "assign,SUPERADMIN", "remove,PARROCO", "remove,SUPERADMIN",
+            "tenant,PARROCO", "tenant,SUPERADMIN", "platform,SECRETARIO", "platform,PARROCO" })
     void rejectsOtherRolesWithoutChangingPermissions(String operation, String role) {
         stubUserRole(role);
         StepVerifier.create(execute(operation)).expectError(BusinessException.class).verify();
@@ -62,7 +62,7 @@ class PermissionServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"assign", "remove", "tenant", "platform"})
+    @ValueSource(strings = { "assign", "remove", "tenant", "platform" })
     void rejectsMissingUser(String operation) {
         when(users.findById(10L)).thenReturn(Mono.empty());
         StepVerifier.create(execute(operation)).expectError(UserNotFoundException.class).verify();
