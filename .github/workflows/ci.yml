@@ -63,8 +63,13 @@ jobs:
               exit 1
             fi
           done
+          SONAR_EXTRA_ARGS=""
+          if [[ "$SONAR_REGION" == "us" ]]; then
+            SONAR_EXTRA_ARGS="-Dsonar.region=us"
+          fi
+
           bash ./mvnw --batch-mode --no-transfer-progress sonar:sonar \
             "-Dsonar.projectKey=$SONAR_PROJECT_KEY" \
             "-Dsonar.organization=$SONAR_ORGANIZATION" \
-            "-Dsonar.region=$SONAR_REGION" \
+            $SONAR_EXTRA_ARGS \
             -Dsonar.qualitygate.wait=true
